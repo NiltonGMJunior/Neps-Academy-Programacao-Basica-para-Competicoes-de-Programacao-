@@ -9,6 +9,81 @@ int main()
     // Como 3 <= n <= 10000, declara uma fita com 10000 elementos (o código, entretanto, só irá iterar por n elementos)
     int fita[10000];
 
+    // Lê os valores iniciais da fita
+    for (int iii = 0; iii < n; ++iii)
+    {
+        std::cin >> fita[iii];
+    }
+
+    // Define um índice para o último zero à esquerda e direita da posição atual na fita, incialmente -1 pois nenhum zero foi detectado
+    int ind_zero_esq = -1;
+    int ind_zero_dir = -1;
+    
+    // Itera por todos os elementos da fita para redefinar seus valores de acordo com a distância ao zero mais próximo
+    for (int iii = 0; iii < n; ++iii)
+    {
+        // Caso o valor da fita seja zero, o índice do zero à esquerda será redefinido pelo índice atual e perde-se a referência ao próximo zero à direita
+        if (fita[iii] == 0)
+        {
+            ind_zero_esq = iii;
+            ind_zero_dir = -1;
+        }
+        // Caso contrário, o valor será redefinido
+        else
+        {
+            // São definidas as distâncias em relação ao zero da esquerda e direita inicializadas no pior caso possível
+            int dist_esq = 9, dist_dir = 9;
+
+            // Verifica se há algum zero encontrado à esquerda
+            if (ind_zero_esq != -1)
+            {
+                // Redefine a distância à esquerda
+                dist_esq = iii - ind_zero_esq;
+            }
+            // Verifica se há algum zero encontrado à esquerda
+            if (ind_zero_dir != -1)
+            {
+                // Redefine a distância à direita
+                dist_dir = ind_zero_dir - iii;
+            }
+            // Caso contrário
+            else
+            {
+                // Busca pelo próximo zero à direita
+                int jjj = iii + 1;
+                while (fita[jjj] != 0 && jjj < n) ++jjj;
+                // Se há zero à direita, redefine o índice de zero à direita e a distância
+                if (jjj < n)
+                {
+                    ind_zero_dir = jjj;
+                    dist_dir = ind_zero_dir;
+                }
+            }
+
+            // Define o valor da fita como o mínimo entre as distâncias à esquerda, direita e 9
+            if (dist_esq <= dist_dir && dist_esq < 9) fita[iii] = dist_esq;
+            else if (dist_dir < dist_esq && dist_dir < 9) fita[iii] = dist_dir;
+            else fita[iii] = 9;
+        }
+    }
+
+    // Imprime os valores da fita
+    for (int iii = 0; iii < n; ++iii) std::cout << fita[iii] << " ";
+
+    return 0;
+}
+
+/*
+// O seguinte código funcionou para os 03 test-cases da página do problema mas não passou nos testes após submissão
+int main()
+{
+    // Lê o comprimento da fita
+    int n;
+    std::cin >> n;
+
+    // Como 3 <= n <= 10000, declara uma fita com 10000 elementos (o código, entretanto, só irá iterar por n elementos)
+    int fita[10000];
+
     // Inicializa o índice do primerio zero encontrado como -1
     int ind_primeiro_zero = -1;
 
@@ -78,3 +153,4 @@ int main()
 
     return 0;
 }
+*/

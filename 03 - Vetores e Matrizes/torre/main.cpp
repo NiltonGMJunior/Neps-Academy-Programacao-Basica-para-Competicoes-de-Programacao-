@@ -7,7 +7,7 @@ int main()
     std::cin >> n;
 
     // Declara e lê a matriz de entrada representando o tabuleiro
-    int tab[1000][1000];
+    unsigned short tab[1000][1000];
     for (int lin = 0; lin < n; ++lin)
         for (int col = 0; col < n; ++col)
             std::cin >> tab[lin][col];
@@ -19,24 +19,24 @@ int main()
     for (int iii = 0; iii < n; ++iii)
         for (int jjj = 0; jjj < n; ++jjj)
         {
-            soma_lin[iii] = tab[iii][jjj];
-            soma_col[iii] = tab[jjj][iii];
+            soma_lin[iii] += tab[iii][jjj];
+            soma_col[iii] += tab[jjj][iii];
         }
 
-    // Define arbitrariamente o valor do íncide da menor soma como (0, 0)
-    int min_lin = 0, min_col = 0;
+    // Define arbitrariamente o valor do íncide da maior soma como (0, 0)
+    int max_lin = 0, max_col = 0;
 
-    // Percorre cada posição do tabuleiro e verifica se a soma de linhas e colunas (excluindo a intersecção) é mínima
+    // Percorre cada posição do tabuleiro e verifica se a soma de linhas e colunas (excluindo a intersecção) é máxima
     for (int lin = 0; lin < n; ++lin)
         for (int col = 0; col < n; ++col)
-            if (soma_lin[lin] + soma_col[col] - 2 * (tab[lin][col]) < soma_lin[min_lin] + soma_col[min_col] - 2 * (tab[min_lin][min_col]))
+            if (soma_lin[lin] + soma_col[col] - 2 * (tab[lin][col]) > soma_lin[max_lin] + soma_col[max_col] - 2 * (tab[max_lin][max_col]))
             {
-                min_lin = lin;
-                min_col = col;
+                max_lin = lin;
+                max_col = col;
             }
 
     // Imprime o valor alvo
-    std::cout << soma_lin[min_lin] + soma_col[min_col] - 2 * (tab[min_lin][min_col]);
+    std::cout << soma_lin[max_lin] + soma_col[max_col] - 2 * (tab[max_lin][max_col]);
 
     return 0;
 }

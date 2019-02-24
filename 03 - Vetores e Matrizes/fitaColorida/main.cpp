@@ -18,7 +18,7 @@ int main()
     // Define um índice para o último zero à esquerda e direita da posição atual na fita, incialmente -1 pois nenhum zero foi detectado
     int ind_zero_esq = -1;
     int ind_zero_dir = -1;
-    
+
     // Itera por todos os elementos da fita para redefinar seus valores de acordo com a distância ao zero mais próximo
     for (int iii = 0; iii < n; ++iii)
     {
@@ -40,7 +40,7 @@ int main()
                 // Redefine a distância à esquerda
                 dist_esq = iii - ind_zero_esq;
             }
-            // Verifica se há algum zero encontrado à esquerda
+            // Verifica se há algum zero encontrado à direita
             if (ind_zero_dir != -1)
             {
                 // Redefine a distância à direita

@@ -81,7 +81,7 @@ int main()
                 // Percorrendo os GPs
                 for (int kkk = 0; kkk < g; ++kkk)
                 {
-                    // Verifica se o piloto pontuou
+                    // Verifica se o piloto pontuou, adicionando a quantidade apropriada de pontos de acordo com sua classificação no GP
                     if ((pilotos[jjj].posicoes)[kkk] <= k)
                     {
                         (pilotos[jjj].pontos)[iii] += pontuacao[(pilotos[jjj].posicoes)[kkk] - 1];

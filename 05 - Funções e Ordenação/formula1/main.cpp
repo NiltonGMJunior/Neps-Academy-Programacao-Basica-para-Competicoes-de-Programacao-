@@ -6,6 +6,14 @@ struct Piloto
     unsigned short int id;
     unsigned short int posicoes[100];
     unsigned short int pontos[100] { 0 };
+};
+
+// comparaPilotos() recebe duas estruturas representando pilotos: piloto_a e piloto_b. Se o piloto_a for melhor classificado num sistema de pontos s, então retorna true. Retorna false caso contrário
+// No caso de empate de pontos, retorna true se a id do piloto_a for menor que a do piloto_b e false caso contrário
+bool comparaPilotos(const Piloto &piloto_a, const Piloto &piloto_b, const unsigned short int s)
+{
+    if (piloto_a.pontos[s] == piloto_b.pontos[s]) return piloto_a.id < piloto_b.id;
+    else return piloto_a.pontos[s] > piloto_b.pontos[s];
 }
 
 int main()
@@ -47,13 +55,13 @@ int main()
 
         // Para cada um dos sistemas, gera uma saída com o(s) vencedor(es) do campeonato
         // Caso haja mais de um vencedor, a saída será ordenada em ordem crescente do número de cada piloto ganhador
-        
+
         // Declara o número de posições pontuadas num determinado sistema de pontuação
         unsigned short int k;
 
         // Declara um vetor contendo os pontos para cada posição i + 1, em que i é o índice do vetor
         unsigned short int pontuacao[100];
-        
+
         // Percorre os sistemas produzindo as saídas apropriadas
         for (int iii = 0; iii < s; ++iii)
         {
@@ -71,7 +79,7 @@ int main()
             for (int jjj = 0; jjj < p; ++jjj)
             {
                 // Percorrendo os GPs
-                for (int kkk = 0; kkk < g)
+                for (int kkk = 0; kkk < g; ++kkk)
                 {
                     // Verifica se o piloto pontuou
                     if ((pilotos[jjj].posicoes)[kkk] <= k)
@@ -82,10 +90,33 @@ int main()
             }
 
             // Copia o veor de pilotos para outro vetor a ser ordenado de acordo com pontuacao
-            Piloto pilotos_ordenado = pilotos;
+            Piloto pilotos_ordenado[100];
+            std::copy(pilotos, pilotos + p, pilotos_ordenado);
 
             // Ordena o vetor de piltos ordenados de acordo com a pontuacao e id
-            
+            for (int inicial = 0; inicial < p - 1; ++inicial)
+            {
+                int melhor_piloto = inicial;
+                for (int atual = inicial + 1; atual < p; ++atual)
+                {
+                    if (comparaPilotos(pilotos_ordenado[atual], pilotos_ordenado[melhor_piloto], iii))
+                    {
+                        melhor_piloto = atual;
+                    }
+                }
+                Piloto temp = pilotos_ordenado[inicial];
+                pilotos_ordenado[inicial] = pilotos_ordenado[melhor_piloto];
+                pilotos_ordenado[melhor_piloto] = temp;
+            }
+
+            // Avalia a pontuação do vencedor no sistema de pontos atual
+            unsigned short int pontos_vencedor = (pilotos_ordenado[0]).pontos[iii];
+            unsigned short int jjj = 0;
+            do {
+                std::cout << (pilotos_ordenado[jjj]).id << ' ';
+                ++jjj;
+            } while((pilotos_ordenado[jjj]).pontos[iii] == pontos_vencedor);
+            std::cout << '\n';
         }
     }
 

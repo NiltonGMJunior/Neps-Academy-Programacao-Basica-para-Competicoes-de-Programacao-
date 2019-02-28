@@ -89,11 +89,12 @@ int main()
                 }
             }
 
-            // Copia o veor de pilotos para outro vetor a ser ordenado de acordo com pontuacao
+            // Copia o veor de pilotos para outro vetor a ser ordenado de acordo com pontuação
             Piloto pilotos_ordenado[100];
             std::copy(pilotos, pilotos + p, pilotos_ordenado);
 
             // Ordena o vetor de piltos ordenados de acordo com a pontuacao e id
+            // Selection-Sort
             for (int inicial = 0; inicial < p - 1; ++inicial)
             {
                 int melhor_piloto = inicial;
@@ -111,6 +112,8 @@ int main()
 
             // Avalia a pontuação do vencedor no sistema de pontos atual
             unsigned short int pontos_vencedor = (pilotos_ordenado[0]).pontos[iii];
+
+            // Imprime a id do vencedor e dos demais pilotos com a mesma pontuação, no caso de empate no primeiro lugar
             unsigned short int jjj = 0;
             do {
                 std::cout << (pilotos_ordenado[jjj]).id << ' ';
